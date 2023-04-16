@@ -1,0 +1,69 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
+    </script>
+    {% block title %}
+    <title>Wandering</title>
+    {% endblock %}
+</head>
+
+<body>
+  <header class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper teal darken">
+        <a href="{% url 'home' %}" class="brand-logo">Wandering</a>
+          <ul id="nav-mobile" class="right ">
+          <li>
+            <a href="{% url 'about' %}">About Us</a>
+          </li>
+          <li>
+            <a href="badges.html">Login</a>
+          </li>
+          <li>
+            <a href="badges.html">Create Profile</a>
+          </li>
+          <li>
+            <a class='dropdown-trigger' href='#' data-target='dropdown1'>My Profile</a>
+
+  <!-- Dropdown Structure -->
+  <ul id='dropdown1' class='dropdown-content teal lighten-5'>
+    <li>
+      <a href="{% url 'about' %}">My Trips</a>
+    </li>
+    <li>
+      <a href="{% url 'about' %}">Option 2</a>
+    </li>
+    <li>
+      <a href="{% url 'about' %}">Option 3</a>
+    </li>
+  </ul>
+      </div>
+    </nav>
+  </header>
+
+  
+  <main class="container">
+    {% block content %}
+    {% endblock %}
+  </main>
+  <footer class="page-footer teal darken">
+    <p>Copyright &copy; All Rights Reserved Wandering App 2023</p>
+  </footer>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems, {});
+  });
+</script>
+</body>
+</html>
