@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title%}
+<title>Details</title>
+{% endblock %}
+
+
+{% block content %}
+<h1> {{ trip.destination }} </h1>
+<h3>Stayed at: <a href="{{ trip.hotel_url }}"> {{ trip.hotel }}</a> </h3>
+<div class="row">
+    <div class="col s12 m5">
+      <div class="card-panel">
+        <span class="gray-text">{{ trip.hotel_description }}</span>
+      </div>
+    </div>
+  </div>
+<p><a href="{{ trip.hotel_url }}">Book This Hotel</a></p>
+<h3> {{ trip.dates }}</h3>
+
+
+{% endblock %}

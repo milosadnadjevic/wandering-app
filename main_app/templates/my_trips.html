@@ -8,29 +8,22 @@
 <h1>My Trips: </h1>
 
 {% for trip in trips %}
-
 <div class="row">
-    <div class="col s12 m7">
+    <div class="col s10 m10">
       <div class="card">
         <div class="card-image">
-          <img src="{{ trip.img_url }}.png">
+          <img src="{{ trip.cover }}.png">
           <span class="card-title">{{ trip.destination }}</span>
         </div>
         <div class="card-content">
           <p>{{ trip.dates }}</p>
         </div>
         <div class="card-action">
-          <a href="#">See All </a>
+          <a href="/trips/{{ trip.id }}">See Details</a>
         </div>
       </div>
     </div>
   </div>
-<!-- <div class="card">
-    <div class="card-content">
-        <span class="card-title">{{ trip.destination }}</span>
-        <p> {{ trip.dates }} </p>
-    </div>
-</div> -->
 
 {% endfor %}
 
