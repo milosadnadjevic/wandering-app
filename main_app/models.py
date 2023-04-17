@@ -15,3 +15,10 @@ class Trip(models.Model):
     
     def get_absolute_url(self):
         return reverse('trip_details', kwargs={'trip_id': self.id})
+    
+
+class Restaurant(models.Model):
+    restaurant = models.CharField(max_length=100)
+    restaurant_des = models.TextField(max_length=250)
+    restaurant_url = models.CharField(max_length=500)
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)

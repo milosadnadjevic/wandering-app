@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Trip
 
 def home(request):
@@ -19,3 +19,12 @@ def trip_details(request,trip_id):
 class TripCreate(CreateView):
     model = Trip
     fields = ('__all__')
+
+class TripUpdate(UpdateView):
+    model = Trip
+    fields = ('destination', 'dates', 'hotel', 'hotel_url', 'hotel_description')
+
+class TripDelete(DeleteView):
+    model = Trip
+    success_url = '/trips/'
+    template_name = 'trips/trip_confirm_delete.html'

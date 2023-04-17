@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Are You sure you want to delete trip to {{ object.destination }}</title>
+{% endblock%}
+
+
+{% block content %}
+<h1>Are You sure you want to delete trip to {{ object.destination }}?</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete {{ object.destination }}" class="btn red">
+    <a href="{% url 'trip_details' object.id %}" class="btn blue">Cancel</a>
+</form>
+
+{% endblock %}

@@ -20,3 +20,12 @@
 
 
 {% endblock %}
+
+{% block li %}
+<li>
+  <a href="{% url 'trip_update' trip.id %}">Update</a>
+</li>
+<li>
+  <a href="{% url 'trip_delete' trip.id %}">Delete</a>
+</li>
+{% endblock%}
