@@ -18,7 +18,10 @@ class Trip(models.Model):
     
 
 class Restaurant(models.Model):
-    restaurant = models.CharField(max_length=100)
+    restaurant_name = models.CharField(max_length=100)
     restaurant_des = models.TextField(max_length=250)
     restaurant_url = models.CharField(max_length=500)
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.restaurant_name
