@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Trip, Restaurant, Photo
 from .forms import RestaurantForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
 
@@ -11,18 +15,21 @@ BUCKET = 'wandering'
 def home(request):
     return render(request, 'home.html')
 
-def about(request):
-    return render(request, 'about.html')
+# def about(request):
+#     return render(request, 'about.html')
 
+@login_required
 def my_trips(request):
-    trips = Trip.objects.all()
+    trips = Trip.objects.filter(user=request.user)
     return render(request, 'my_trips.html', {'trips': trips})
 
+@login_required
 def trip_details(request,trip_id):
     trip = Trip.objects.get(id=trip_id)
     restaurant_form = RestaurantForm()
     return render(request, 'detail.html', {'trip': trip, 'restaurant_form': restaurant_form})
 
+@login_required
 def add_restaurant(request, trip_id):
     form = RestaurantForm(request.POST)
     if form.is_valid():
@@ -31,6 +38,14 @@ def add_restaurant(request, trip_id):
         new_restaurant.save()
     return redirect('trip_details', trip_id=trip_id)
 
+@login_required
+def delete_restaurant(request, pk):
+    restaurant = Restaurant.objects.get(pk=pk)
+    trip_id = restaurant.trip.id
+    restaurant.delete()
+    return redirect('trip_details', trip_id=trip_id)
+
+@login_required
 def add_photo(request, trip_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
@@ -45,23 +60,35 @@ def add_photo(request, trip_id):
             print((error))
     return redirect('trip_details', trip_id=trip_id)
 
-    
+def signup(request):
+        error_message = ''
+        if request.method == 'POST':
+            form = UserCreationForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+                login(request, user)
+                return redirect('my_trips')
+            else:
+                error_message = 'Invalid Signup - try again'
 
-class TripCreate(CreateView):
+        form = UserCreationForm()
+        return render(request, 'registration/signup.html', {'form': form,  'error': error_message})
+
+class TripCreate(LoginRequiredMixin, CreateView):
     model = Trip
-    fields = ('__all__')
+    fields = ('destination', 'dates', 'hotel', 'cover', 'hotel_url', 'hotel_description')
 
-class TripUpdate(UpdateView):
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class TripUpdate(LoginRequiredMixin, UpdateView):
     model = Trip
     fields = ('destination', 'dates', 'hotel', 'hotel_url', 'hotel_description', 'cover')
 
-class TripDelete(DeleteView):
+class TripDelete(LoginRequiredMixin, DeleteView):
     model = Trip
     success_url = '/trips/'
     template_name = 'trips/trip_confirm_delete.html'
 
-def delete_restaurant(request, pk):
-    restaurant = Restaurant.objects.get(pk=pk)
-    trip_id = restaurant.trip.id
-    restaurant.delete()
-    return redirect('trip_details', trip_id=trip_id)
+

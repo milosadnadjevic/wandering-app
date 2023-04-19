@@ -2,8 +2,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-image: url('/main_app/static/images/globe.jpg');
-  opacity: 30;
 }
 main {
     flex-grow: 1;
@@ -16,7 +14,4 @@ main {
   flex-wrap: wrap;
   justify-content: center;
   display: inline;
-}
-#logo{
-  margin: 10px;
 }

@@ -20,18 +20,21 @@
 <body>
   <header class="navbar-fixed">
     <nav>
-      <div class="nav-wrapper teal darken">
-        <a href="{% url 'home' %}" class="brand-logo">Wandering</a>
+      <div class="nav-wrapper blue darken-1">
+        <a href="{% url 'home' %}" class="brand-logo"><i class="material-icons" font-size="30px">language</i>
+          Wandering</a>
           <ul id="nav-mobile" class="right">
           <li>
-            <a href="{% url 'about' %}">About Us</a>
+            <a href="{% url 'login' %}">Login</a>
           </li>
           <li>
-            <a href="badges.html">Login</a>
+            <a href="{% url 'signup' %}">Create Profile</a>
           </li>
+          {% if user.is_authenticated %}
           <li>
-            <a href="badges.html">Create Profile</a>
+            <a href="{% url 'logout' %}">Logout</a>
           </li>
+          
           <li>
             <a class='dropdown-trigger' href='#' data-target='dropdown1'>Action</a>
 
@@ -44,22 +47,23 @@
       <a href="{% url 'trip_create' %}">Add New Trip</a>
     </li>
     <li>
-      <a href="{% url 'about' %}">Option 3</a>
+      <a href="">Option 3</a>
     </li>
+    {% endif %}
     {% block li %}
     {% endblock%}
   </ul>
       </div>
     </nav>
   </header>
-
-  
-  <main class="container">
+    <main class="container">
     {% block content %}
     {% endblock %}
   </main>
+
+ 
   <br><hr><br>
-  <footer class="page-footer teal darken">
+  <footer class="page-footer blue darken-1">
     <p>Copyright &copy; All Rights Reserved Wandering App 2023</p>
   </footer>
 <script>

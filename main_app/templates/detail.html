@@ -4,9 +4,9 @@
 <title>Details</title>
 {% endblock %}
 
-
 {% block content %}
 
+<div class="container">
 <ul class="collapsible">
   <li>
     <div class="collapsible-header"><i class="material-icons">restaurant</i>Add Restaurants</div>
@@ -38,6 +38,8 @@
     </div>
   </li>
 </ul>
+</div>
+
 
 <h1> {{ trip.destination }} </h1>
 <h4> {{ trip.dates }}</h4>
@@ -62,8 +64,8 @@
 <h4>Favorite Restaurants:</h4>
 
 <!-- restaurant -->
-
-{% for restaurant in trip.restaurant_set.all %}
+<div class="container">
+  {% for restaurant in trip.restaurant_set.all %}
     <a class="waves-effect waves-light modal-trigger" href="#{{ restaurant.restaurant_name }}">
         <h4>{{ restaurant.restaurant_name }}</h4>
     </a>
@@ -80,11 +82,13 @@
     <p>{{ restaurant.restaurant_des }}</p>
   </div>
   <div class="modal-footer">
-    <a href="{{ restaurant.restaurant_url }}" class="modal-close waves-effect waves-green btn-flat">Book This Restaurant</a>
+    <a href="{{ restaurant.restaurant_url }}" class="modal-close waves-effect waves-green btn blue">Book This Restaurant</a>
   </div>
 </div>
 <hr>
 {% endfor %}
+</div>
+
 
 <!-- photos -->
 <h3>My Photos:</h3>
@@ -92,16 +96,11 @@
 {% for photo in trip.photo_set.all %}
 <span class="image-container">
         <img src="{{ photo.url }}" alt="{{ trip.destination }}" class="materialboxed" width="250">
-
 </span>
 {% empty %}
       <div class="card-panel center-align">No Photos Yet</div>
 {% endfor %}
   
-
-
-
-
   <script>
      document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.modal');

@@ -10,15 +10,18 @@
 
 {% block content %}
     {% if object%}
-        <h2>Update my Trip</h2>
+        <h3>Update my trip to {{ trip.destination }}</h3>
     {% else %}
-        <h2>New Trip</h2>
+        <h3>New Trip</h3>
     {% endif %}
 
 <form action="" method="post">
     {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit" class="btn orange">
+    <table>
+         {{ form.as_table }}
+    </table>
+    <br>
+   <input type="submit" value="Submit" class="btn green">
 </form>
 
 {% endblock %}
