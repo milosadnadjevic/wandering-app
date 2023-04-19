@@ -11,3 +11,12 @@ main {
 .restaurant {
   width: 400px;
 }
+.image-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  display: inline;
+}
+#logo{
+  margin: 10px;
+}

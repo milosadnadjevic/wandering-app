@@ -87,8 +87,13 @@
 {% endfor %}
 
 <!-- photos -->
+<h3>My Photos:</h3>
+<hr>
 {% for photo in trip.photo_set.all %}
-      <img src="{{ photo.url }}" alt="{{ trip.destination }}" class="materialboxed" width="250">
+<span class="image-container">
+        <img src="{{ photo.url }}" alt="{{ trip.destination }}" class="materialboxed" width="250">
+
+</span>
 {% empty %}
       <div class="card-panel center-align">No Photos Yet</div>
 {% endfor %}
