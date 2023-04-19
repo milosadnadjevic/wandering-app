@@ -22,7 +22,7 @@
     <nav>
       <div class="nav-wrapper teal darken">
         <a href="{% url 'home' %}" class="brand-logo">Wandering</a>
-          <ul id="nav-mobile" class="right ">
+          <ul id="nav-mobile" class="right">
           <li>
             <a href="{% url 'about' %}">About Us</a>
           </li>
@@ -33,10 +33,10 @@
             <a href="badges.html">Create Profile</a>
           </li>
           <li>
-            <a class='dropdown-trigger' href='#' data-target='dropdown1'>My Profile</a>
+            <a class='dropdown-trigger' href='#' data-target='dropdown1'>Action</a>
 
   <!-- Dropdown Structure -->
-  <ul id='dropdown1' class='dropdown-content teal lighten-5'>
+  <ul id='dropdown1' class='dropdown-content white'>
     <li>
       <a href="{% url 'my_trips' %}">My Trips</a>
     </li>
@@ -58,6 +58,7 @@
     {% block content %}
     {% endblock %}
   </main>
+  <br><hr><br>
   <footer class="page-footer teal darken">
     <p>Copyright &copy; All Rights Reserved Wandering App 2023</p>
   </footer>

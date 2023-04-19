@@ -25,3 +25,11 @@ class Restaurant(models.Model):
     
     def __str__(self):
         return self.restaurant_name
+    
+
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"Photo for trip_id: {self.trip_id} @{self.url}"

@@ -6,30 +6,65 @@
 
 
 {% block content %}
+
+<ul class="collapsible">
+  <li>
+    <div class="collapsible-header"><i class="material-icons">restaurant</i>Add Restaurants</div>
+    <div class="collapsible-body">
+      <div class="restaurant">
+        <form action="{% url 'add_restaurant' trip.id %}" method="post">
+        {% csrf_token %}
+        {{ restaurant_form }}
+        <input type="submit" value="Add Restaurant" class="btn green">
+      </form>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="collapsible-header">
+        <i class="material-icons">linked_camera</i>Add Photos
+    </div>
+    <div class="collapsible-body">
+      <form
+            action="{% url 'add_photo' trip.id %}"
+            method="post"
+            class="card-panel"
+             enctype="multipart/form-data"
+      >
+  {% csrf_token %}
+      <input type="file" name="photo-file">
+      <input type="submit" value="Upload Photo" class="btn green">
+  </form>
+    </div>
+  </li>
+</ul>
+
 <h1> {{ trip.destination }} </h1>
 <h4> {{ trip.dates }}</h4>
 <h4>Hotel:
+
+<!-- hotel -->
+
   <a class="waves-effect waves-light modal-trigger" href="#modal1">{{ trip.hotel }}</a>
 </h4>
 
 <div id="modal1" class="modal">
   <div class="modal-content">
     <h4>{{ trip.hotel }}</h4>
-    <p>{{ trip.hotel_description }}</p>
+      <p>{{ trip.hotel_description }}</p>
   </div>
   <div class="modal-footer">
     <a href="{{ trip.hotel_url }}" class="modal-close waves-effect waves-blue btn blue">Book This Hotel</a>
   </div>
 </div>
-<form action="{% url 'add_restaurant' trip.id %}" method="post">
-  {% csrf_token %}
-  {{ restaurant_form }}
-  <input type="submit" value="Add Restaurant" class="btn green">
-</form>
+
 
 <h4>Favorite Restaurants:</h4>
+
+<!-- restaurant -->
+
 {% for restaurant in trip.restaurant_set.all %}
-    <a class="waves-effect waves-light modal-trigger" href="#modal1">
+    <a class="waves-effect waves-light modal-trigger" href="#{{ restaurant.restaurant_name }}">
         <h4>{{ restaurant.restaurant_name }}</h4>
     </a>
 
@@ -39,8 +74,7 @@
     <a href="{% url 'delete_restaurant' restaurant.id %}">Remove</a>
 </form>
 <br>
-
-<div id="modal1" class="modal">
+<div id="{{ restaurant.restaurant_name }}" class="modal">
   <div class="modal-content">
     <h4>{{ restaurant.restaurant_name }}</h4>
     <p>{{ restaurant.restaurant_des }}</p>
@@ -52,10 +86,31 @@
 <hr>
 {% endfor %}
 
+<!-- photos -->
+{% for photo in trip.photo_set.all %}
+      <img src="{{ photo.url }}" alt="{{ trip.destination }}" class="materialboxed" width="250">
+{% empty %}
+      <div class="card-panel center-align">No Photos Yet</div>
+{% endfor %}
+  
+
+
+
+
   <script>
      document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elems, {});
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems, {});
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.materialboxed');
+    var instances = M.Materialbox.init(elems, {});
   });
   </script>
 {% endblock %}

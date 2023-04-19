@@ -6,12 +6,22 @@
 
 
 {% block content %}
-<h1>Are You sure you want to delete trip to {{ object.destination }}?</h1>
 
+<br><br><br>
+<div class="row">
+    <div class="col s12 m6">
+      <div class="card white">
+        <div class="card-content">
+          <h5> Are you sure you want to delete trip to {{ object.destination }}?</h5>
 <form method="post">
     {% csrf_token %}
     <input type="submit" value="Delete {{ object.destination }}" class="btn red">
-    <a href="{% url 'trip_details' object.id %}" class="btn blue">Cancel</a>
+    <a href="{% url 'trip_details' object.id %}" class="btn green">Cancel</a>
 </form>
+      </div>
+    </div>
+  </div>
+
+
 
 {% endblock %}
