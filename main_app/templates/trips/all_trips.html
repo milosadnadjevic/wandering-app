@@ -5,55 +5,6 @@
 {% endblock %}
 
 {% block content %}
-
-<div class="container">
-<ul class="collapsible">
-  <li>
-    <div class="collapsible-header"><i class="material-icons">restaurant</i>Add Restaurants</div>
-    <div class="collapsible-body">
-      <div class="restaurant">
-        <form action="{% url 'add_restaurant' trip.id %}" method="post">
-        {% csrf_token %}
-        {{ restaurant_form }}
-        <input type="submit" value="Add Restaurant" class="btn green">
-      </form>
-      </div>
-    </div>
-  </li>
-  <li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">star</i>Add New Attraction</div>
-      <div class="collapsible-body">
-        <div class="attraction">
-          <form action="{% url 'add_attraction' trip.id %}" method="post">
-          {% csrf_token %}
-          {{ attraction_form }}
-          <input type="submit" value="Add New Attraction" class="btn green">
-        </form>
-        </div>
-      </div>
-    </li>
-    <li>
-    <div class="collapsible-header">
-        <i class="material-icons">linked_camera</i>Add Photos
-    </div>
-    <div class="collapsible-body">
-      <form
-            action="{% url 'add_photo' trip.id %}"
-            method="post"
-            class="card-panel"
-             enctype="multipart/form-data"
-      >
-  {% csrf_token %}
-      <input type="file" name="photo-file">
-      <input type="submit" value="Upload Photo" class="btn green">
-  </form>
-    </div>
-  </li>
-</ul>
-</div>
-
-
 <h1> {{ trip.destination }} </h1>
 <h4> {{ trip.dates }}</h4>
 <h4>Hotel:
@@ -74,7 +25,7 @@
 </div>
 
 
-<h4>Favorite Restaurants:</h4>
+<h4>Recomended Restaurants:</h4>
 <hr>
 <!-- restaurant -->
 
@@ -86,7 +37,7 @@
 
 <form action="{% url 'delete_restaurant' restaurant.id %}" method="post" class="inline-form">
   {% csrf_token %}
-    <a href="{% url 'delete_restaurant' restaurant.id %}">Remove</a>
+   
 </form>
 <br>
 <div id="{{ restaurant.restaurant_name }}" class="modal">
@@ -110,7 +61,6 @@
 
 <form action="{% url 'delete_attraction' attraction.id %}" method="post" class="inline-form">
 {% csrf_token %}
-<a href="{% url 'delete_attraction' attraction.id %}">Remove</a>
 </form>
 <br>
 <div id="{{ attraction.attraction_name }}" class="modal">
@@ -151,11 +101,3 @@
   </script>
 {% endblock %}
 
-{% block li %}
-<li>
-  <a href="{% url 'trip_update' trip.id %}">Update</a>
-</li>
-<li>
-  <a href="{% url 'trip_delete' trip.id %}">Delete</a>
-</li>
-{% endblock%}

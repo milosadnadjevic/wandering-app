@@ -13,10 +13,12 @@ S3_BASE_URL='https://s3.us-east-1.amazonaws.com/'
 BUCKET = 'wandering'
 
 def home(request):
-    return render(request, 'home.html')
+    trips = Trip.objects.all()
+    return render(request, 'home.html', {'trips': trips})
 
-# def about(request):
-#     return render(request, 'about.html')
+def all_trips(request, trip_id):
+    trip = Trip.objects.get(id=trip_id)
+    return render(request, 'trips/all_trips.html', {'trip': trip})
 
 @login_required
 def my_trips(request):
