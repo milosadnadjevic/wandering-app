@@ -28,6 +28,14 @@ class Restaurant(models.Model):
     def __str__(self):
         return self.restaurant_name
     
+class Attraction(models.Model):
+    attraction_name = models.CharField(max_length=200)
+    attraction_description = models.CharField(max_length=1000)
+    attraction_url = models.CharField(max_length=400)
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.attraction_name
 
 class Photo(models.Model):
     url = models.CharField(max_length=200)

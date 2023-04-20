@@ -21,6 +21,19 @@
     </div>
   </li>
   <li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">restaurant</i>Add New Attraction</div>
+      <div class="collapsible-body">
+        <div class="attraction">
+          <form action="{% url 'add_attraction' trip.id %}" method="post">
+          {% csrf_token %}
+          {{ attraction_form }}
+          <input type="submit" value="Add New Attraction" class="btn green">
+        </form>
+        </div>
+      </div>
+    </li>
+    <li>
     <div class="collapsible-header">
         <i class="material-icons">linked_camera</i>Add Photos
     </div>
@@ -62,9 +75,9 @@
 
 
 <h4>Favorite Restaurants:</h4>
-
+<hr>
 <!-- restaurant -->
-<div class="container">
+
   {% for restaurant in trip.restaurant_set.all %}
     <a class="waves-effect waves-light modal-trigger" href="#{{ restaurant.restaurant_name }}">
         <h4>{{ restaurant.restaurant_name }}</h4>
@@ -87,16 +100,35 @@
 </div>
 <hr>
 {% endfor %}
-</div>
-
-
-<!-- photos -->
-<h3>My Photos:</h3>
+<h4>My favorites:</h4>
 <hr>
+{% for attraction in trip.attraction_set.all %}
+<a class="waves-effect waves-light modal-trigger" href="#{{ attraction.attraction_name }}">
+    <h4>{{ attraction.attraction_name }}</h4>
+</a>
+
+
+<form action="{% url 'delete_attraction' attraction.id %}" method="post" class="inline-form">
+{% csrf_token %}
+<a href="{% url 'delete_attraction' attraction.id %}">Remove</a>
+</form>
+<br>
+<div id="{{ attraction.attraction_name }}" class="modal">
+<div class="modal-content">
+<h4>{{ attraction.attraction_name }}</h4>
+<p>{{ attraction.attraction_description }}</p>
+</div>
+<div class="modal-footer">
+<a href="{{ attraction.attraction_url }}" class="modal-close waves-effect waves-green btn blue">Let's Go!</a>
+</div>
+</div>
+{% endfor %}
+<!-- photos -->
+<h4>My Photos:</h4>
 {% for photo in trip.photo_set.all %}
-<span class="image-container">
+<div class="image-container">
         <img src="{{ photo.url }}" alt="{{ trip.destination }}" class="materialboxed" width="250">
-</span>
+</div>
 {% empty %}
       <div class="card-panel center-align">No Photos Yet</div>
 {% endfor %}

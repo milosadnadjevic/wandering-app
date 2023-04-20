@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Trip, Restaurant, Photo
-from .forms import RestaurantForm
+from .models import Trip, Restaurant, Photo, Attraction
+from .forms import RestaurantForm, AttractionForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -27,7 +27,8 @@ def my_trips(request):
 def trip_details(request,trip_id):
     trip = Trip.objects.get(id=trip_id)
     restaurant_form = RestaurantForm()
-    return render(request, 'detail.html', {'trip': trip, 'restaurant_form': restaurant_form})
+    attraction_form = AttractionForm()
+    return render(request, 'detail.html', {'trip': trip, 'restaurant_form': restaurant_form, 'attraction_form': attraction_form})
 
 @login_required
 def add_restaurant(request, trip_id):
@@ -38,11 +39,26 @@ def add_restaurant(request, trip_id):
         new_restaurant.save()
     return redirect('trip_details', trip_id=trip_id)
 
+def add_attraction(request, trip_id):
+    form = AttractionForm(request.POST)
+    if form.is_valid():
+        new_attraction = form.save(commit=False)
+        new_attraction.trip_id = trip_id
+        new_attraction.save()
+    return redirect('trip_details', trip_id=trip_id)
+
 @login_required
 def delete_restaurant(request, pk):
     restaurant = Restaurant.objects.get(pk=pk)
     trip_id = restaurant.trip.id
     restaurant.delete()
+    return redirect('trip_details', trip_id=trip_id)
+
+@login_required
+def delete_attraction(request, pk):
+    attraction = Attraction.objects.get(pk=pk)
+    trip_id = attraction.trip.id
+    attraction.delete()
     return redirect('trip_details', trip_id=trip_id)
 
 @login_required
